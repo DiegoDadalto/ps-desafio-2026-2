@@ -35,8 +35,20 @@ class TarefaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreTarefaRequest $request): JsonResponse
     {
+        $idMembro = $request->input('idMembro_alocado');
+        $idProjeto = $request->input('idProjeto_vinculado');
+
+        $numeroProjetos = Tarefa::where('idMembro_alocado', $idMembro) // procura tarefas associadas ao membro
+                                ->where('idProjeto_vinculado', '!=', $idProjeto) // procura projetos diferentes
+                                ->distinct('idProjeto_vinculado') // ignora duplicatas
+                                ->count('idProjeto_vinculado'); // conta todos os projetos que o membro está
+
+        if ($numeroProjetos >= 2) {
+            return response()->json(['message' => 'Um membro não pode participar de mais de dois projetos.'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $tarefa = Tarefa::create($request->validated());
         return response()->json($tarefa, Response::HTTP_CREATED);
     }
@@ -64,6 +76,21 @@ class TarefaController extends Controller
     public function update(UpdateTarefaRequest $request, String $id): JsonResponse
     {
         $tarefa = Tarefa::findOrFail($id);
+        $validados = $request->validated();
+
+        $idMembro = $validados['idMembro_alocado'];
+        $idProjeto = $validados['idProjeto_vinculado'];
+
+        $numeroProjetos = Tarefa::where('idMembro_alocado', $idMembro) // procura tarefas associadas ao membro
+                                ->where('id', '!=', $tarefa->id) // ignora a própria tarefa
+                                ->where('idProjeto_vinculado', '!=', $idProjeto) // procura projetos diferentes
+                                ->distinct('idProjeto_vinculado') // ignora duplicatas
+                                ->count('idProjeto_vinculado'); // conta todos os projetos que o membro está
+
+        if ($numeroProjetos >= 2) {
+            return response()->json(['message' => 'Um membro não pode participar de mais de dois projetos.'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $tarefa->update($request->validated());
         return response()->json($tarefa, Response::HTTP_OK);
     }
