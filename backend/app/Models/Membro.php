@@ -22,5 +22,9 @@ class Membro extends Model
     protected $hidden = [
         'senha',
     ];
+
+    public function tarefas() {
+        return $this->hasMany(Tarefa::class);
+    }
 }
 
