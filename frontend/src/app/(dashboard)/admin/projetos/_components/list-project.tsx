@@ -11,7 +11,7 @@ import {
 } from '@/components/dashboard/table'
 import { api } from '@/services/api'
 import { projetoType } from '@/types/projeto'
-import { LuInfo, LuPen, LuCirclePlus, LuTrash } from 'react-icons/lu'
+import { LuInfo, LuPen, LuPlus, LuTrash } from 'react-icons/lu'
 import { DialogUpdateProjeto } from './dialog-update-project'
 import { DialogProjetoDelete } from './dialog-delete-project'
 import { DialogInformationProjeto } from './dialog-information-project'
@@ -33,7 +33,7 @@ export default async function ListProjects() {
       <DashboardContainer className="flex h-min justify-between space-x-0 gap-y-2.5 max-sm:flex-col">
         <DialogCreateProjeto>
           <Button size="sm">
-            <LuCirclePlus />
+            <LuPlus />
             Novo projeto
           </Button>
         </DialogCreateProjeto>
@@ -44,8 +44,8 @@ export default async function ListProjects() {
             <TableRow>
               <TableHead>Nome</TableHead>
               <TableHead>Cliente</TableHead>
-              <TableHead>Início</TableHead>
-              <TableHead>Fim</TableHead>
+              <TableHead className="hidden md:table-cell">Início</TableHead>
+              <TableHead className="hidden md:table-cell">Fim</TableHead>
               <TableHead className="text-right">Ações</TableHead>
             </TableRow>
           </TableHeader>
@@ -54,10 +54,10 @@ export default async function ListProjects() {
               <TableRow key={projeto.id}>
                 <TableCell>{projeto.nome}</TableCell>
                 <TableCell>{projeto.nome_cliente}</TableCell>
-                <TableCell>
+                <TableCell className="hidden md:table-cell">
                   {new Date(projeto.data_inicio).toLocaleDateString('pt-BR')}
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden md:table-cell">
                   {new Date(projeto.data_fim).toLocaleDateString('pt-BR')}
                 </TableCell>
                 <TableCell className="flex justify-end gap-2">
