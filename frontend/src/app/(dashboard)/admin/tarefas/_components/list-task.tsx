@@ -18,8 +18,8 @@ import { DialogInformationTarefa } from './dialog-information-task'
 import { DialogCreateTarefa } from './dialog-create-task'
 
 export default async function ListTasks() {
-  const { response } = await api<tarefaType[]>('GET', '/tarefa')
-
+  const { response } = await api<tarefaType[]>('GET', '/tarefas')
+  
   if (!response) {
     return (
       <DashboardContainer className="text-destructive">
@@ -43,6 +43,8 @@ export default async function ListTasks() {
           <TableHeader>
             <TableRow>
               <TableHead>Descrição</TableHead>
+              <TableHead>Projeto</TableHead>
+              <TableHead>Membro</TableHead>
               <TableHead className="hidden md:table-cell">Início</TableHead>
               <TableHead className="hidden md:table-cell">Fim</TableHead>
               <TableHead className="text-right">Ações</TableHead>
@@ -52,11 +54,13 @@ export default async function ListTasks() {
             {response.map((tarefa: tarefaType) => (
               <TableRow key={tarefa.id}>
                 <TableCell>{tarefa.descricao}</TableCell>
+                <TableCell>{tarefa.projeto.nome}</TableCell>
+                <TableCell>{tarefa.membro.nome}</TableCell>
                 <TableCell className="hidden md:table-cell">
-                  {new Date(tarefa.data_inicio).toLocaleDateString('pt-BR')}
+                  {new Date(tarefa.data_inicio).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                  {new Date(tarefa.data_fim).toLocaleDateString('pt-BR')}
+                  {new Date(tarefa.data_fim).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
                 </TableCell>
                 <TableCell className="flex justify-end gap-2">
                   <DialogInformationTarefa tarefa={tarefa}>

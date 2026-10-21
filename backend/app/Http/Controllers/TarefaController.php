@@ -20,7 +20,7 @@ class TarefaController extends Controller
      */
     public function index(): JsonResponse
     {
-        $tarefas = Tarefa::all();
+        $tarefas = Tarefa::with('membro')->with('projeto')->get();
         return response()->json($tarefas, Response::HTTP_OK);
     }
 

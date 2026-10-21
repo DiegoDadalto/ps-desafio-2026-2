@@ -1,3 +1,6 @@
+import { membroType } from "./member"
+import { projetoType } from "./projeto"
+
 export type tarefaType = {
     id: string
     idMembro_alocado: string
@@ -7,4 +10,6 @@ export type tarefaType = {
     data_fim: string
     created_at?: string
     updated_at?: string
+    membro: membroType
+    projeto: projetoType
 }

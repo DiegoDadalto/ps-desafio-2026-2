@@ -19,10 +19,10 @@ class Tarefa extends Model
     ];
 
     public function membro() {
-        return $this->belongsTo(Membro::class);
+        return $this->belongsTo(Membro::class, 'idMembro_alocado', 'id');
     }
 
     public function projeto() {
-        return $this->belongsTo(Membro::class);
+        return $this->belongsTo(Projeto::class, 'idProjeto_vinculado', 'id');
     }
 }
