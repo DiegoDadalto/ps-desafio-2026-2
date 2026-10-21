@@ -42,7 +42,7 @@ export default async function ListTasks() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Descrição</TableHead>
+              <TableHead>Título</TableHead>
               <TableHead>Projeto</TableHead>
               <TableHead>Membro</TableHead>
               <TableHead className="hidden md:table-cell">Início</TableHead>
@@ -53,7 +53,7 @@ export default async function ListTasks() {
           <TableBody>
             {response.map((tarefa: tarefaType) => (
               <TableRow key={tarefa.id}>
-                <TableCell>{tarefa.descricao}</TableCell>
+                <TableCell>{tarefa.titulo}</TableCell>
                 <TableCell>{tarefa.projeto.nome}</TableCell>
                 <TableCell>{tarefa.membro.nome}</TableCell>
                 <TableCell className="hidden md:table-cell">

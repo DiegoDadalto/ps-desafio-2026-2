@@ -27,6 +27,7 @@ class TarefaFactory extends Factory
         return [
             'idMembro_alocado' => Membro::inRandomOrder()->first()?->id ?? Membro::factory(),
             'idProjeto_vinculado' => Projeto::factory(),
+            'titulo' => $this->faker->sentence(4),
             'descricao' => $this->faker->paragraph(),
             'data_inicio' => $dataInicio->format('Y-m-d'),
             'data_fim' => $dataFim->format('Y-m-d'),

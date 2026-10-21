@@ -13,6 +13,7 @@ class Tarefa extends Model
     protected $fillable = [
         'idMembro_alocado',
         'idProjeto_vinculado',
+        'titulo',
         'descricao',
         'data_inicio',
         'data_fim'

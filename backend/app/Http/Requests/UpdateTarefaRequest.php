@@ -24,6 +24,7 @@ class UpdateTarefaRequest extends FormRequest
         return [
             'idMembro_alocado' => 'sometimes',
             'idProjeto_vinculado' => 'sometimes',
+            'titulo' => 'sometimes',
             'descricao' => 'sometimes',
             'data_inicio' => 'sometimes|date',
             'data_fim' => 'sometimes|date|after_or_equal:data_inicio'

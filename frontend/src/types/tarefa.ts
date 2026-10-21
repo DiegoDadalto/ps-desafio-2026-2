@@ -5,6 +5,7 @@ export type tarefaType = {
     id: string
     idMembro_alocado: string
     idProjeto_vinculado: string
+    titulo: string
     descricao: string
     data_inicio: string
     data_fim: string

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('idMembro_alocado')->references('id')->on('membros');
             $table->foreignUuid('idProjeto_vinculado')->references('id')->on('projetos')->onDelete('cascade');
+            $table->text('titulo');
             $table->text('descricao');
             $table->date('data_inicio');
             $table->date('data_fim');

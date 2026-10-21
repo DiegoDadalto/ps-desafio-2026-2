@@ -24,6 +24,7 @@ class StoreTarefaRequest extends FormRequest
         return [
             'idMembro_alocado' => 'required',
             'idProjeto_vinculado' => 'required',
+            'titulo' => 'required',
             'descricao' => 'required',
             'data_inicio' => 'required|date',
             'data_fim' => 'required|date|after_or_equal:data_inicio'
@@ -34,6 +35,7 @@ class StoreTarefaRequest extends FormRequest
         return [
             'idMembro_alocado' => 'A tarefa precisa estar alocada a um membro',
             'idProjeto_vinculado' => 'A tarefa precisa estar vinculada a um projeto',
+            'titulo' => 'A tarefa precisa de um título',
             'descricao' => 'A tarefa precisa de uma descrição',
             'data_inicio.required' => 'A data de início é obrigatória',
             'data_inicio.date' => 'A data de início precisa ser uma data válida',
