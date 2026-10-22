@@ -13,9 +13,13 @@ import { createTarefa } from '@/actions/tarefa'
 import { filterFormData } from '@/services/filter-form-data'
 import { useEffect, useState } from 'react'
 import { useToast } from '@/components/use-toast'
+import { projetoType } from '@/types/projeto'
+import { membroType } from '@/types/member'
 
 interface DialogFilterTarefaProps {
   children: React.ReactNode
+  //projetos: projetoType[]
+  //membros: membroType[]
 }
 
 export function DialogFilterTarefa({ children }: DialogFilterTarefaProps) {

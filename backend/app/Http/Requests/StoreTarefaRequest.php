@@ -22,7 +22,7 @@ class StoreTarefaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'idMembro_alocado' => 'required',
+            'idMembro_alocado' => 'sometimes',
             'idProjeto_vinculado' => 'required',
             'titulo' => 'required',
             'descricao' => 'required',

@@ -14,13 +14,17 @@ import { filterFormData } from '@/services/filter-form-data'
 import { useState } from 'react'
 import { useToast } from '@/components/use-toast'
 import { tarefaType } from '@/types/tarefa'
+import { projetoType } from '@/types/projeto'
+import { membroType } from '@/types/member'
 
 interface DialogUpdateTarefaProps {
   tarefa: tarefaType
   children: React.ReactNode
+  projetos?: projetoType[]
+  membros?: membroType[]
 }
 
-export function DialogUpdateTarefa({ tarefa, children }: DialogUpdateTarefaProps) {
+export function DialogUpdateTarefa({ tarefa, children, projetos, membros }: DialogUpdateTarefaProps) {
   const [open, setOpen] = useState<boolean>()
   const { toast } = useToast()
 
@@ -48,7 +52,7 @@ export function DialogUpdateTarefa({ tarefa, children }: DialogUpdateTarefaProps
           </DialogDescription>
         </DialogHeader>
         <form action={submit}>
-          <FormFieldsTarefa tarefa={tarefa} />
+          <FormFieldsTarefa tarefa={tarefa} projetos={projetos} membros={membros} />
         </form>
       </DialogContent>
     </Dialog>

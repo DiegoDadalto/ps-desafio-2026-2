@@ -61,7 +61,7 @@ export default function FormFieldsTarefa({
             name="idProjeto_vinculado"
             required
             disabled={pending}
-            defaultValue="">
+            defaultValue={tarefa?.idProjeto_vinculado || ""}>
               <option value="" disabled>Selecione um projeto</option>
               {projetos?.map((projeto) => (
                 <option key={projeto.id} value={projeto.id}>{projeto.nome}</option>
@@ -69,14 +69,14 @@ export default function FormFieldsTarefa({
           </select>
         </FormField>
         <FormField>
-          <Label htmlFor="projeto">Membro</Label>
+          <Label htmlFor="membro">Membro</Label>
           <select
             className="flex h-10 w-full rounded border border-input bg-background shadow px-3 py-2 text-sm col-start-2 col-end-5"
             id="idMembro_alocado"
             name="idMembro_alocado"
             required
             disabled={pending}
-            defaultValue="">
+            defaultValue={tarefa?.idMembro_alocado || ""}>
               <option value="" disabled>Selecione um membro</option>
               {membros?.map((membro) => (
                 <option key={membro.id} value={membro.id}>{membro.nome}</option>

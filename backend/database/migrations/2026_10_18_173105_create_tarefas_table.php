@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tarefas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('idMembro_alocado')->references('id')->on('membros');
+            $table->foreignUuid('idMembro_alocado')->nullable()->references('id')->on('membros')->onDelete('set null');
             $table->foreignUuid('idProjeto_vinculado')->references('id')->on('projetos')->onDelete('cascade');
             $table->text('titulo');
             $table->text('descricao');

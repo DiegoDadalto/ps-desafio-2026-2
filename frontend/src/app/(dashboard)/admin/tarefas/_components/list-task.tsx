@@ -66,7 +66,7 @@ export default async function ListTasks() {
               <TableRow key={tarefa.id}>
                 <TableCell>{tarefa.titulo}</TableCell>
                 <TableCell>{tarefa.projeto.nome}</TableCell>
-                <TableCell>{tarefa.membro.nome}</TableCell>
+                <TableCell>{tarefa.membro?.nome}</TableCell>
                 <TableCell className="hidden md:table-cell">
                   {new Date(tarefa.data_inicio).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
                 </TableCell>
@@ -79,7 +79,7 @@ export default async function ListTasks() {
                       <LuInfo />
                     </Button>
                   </DialogInformationTarefa>
-                  <DialogUpdateTarefa tarefa={tarefa}>
+                  <DialogUpdateTarefa tarefa={tarefa} projetos={projetos} membros={membros}>
                     <Button variant="secondary-inverse" size="icon">
                       <LuPen />
                     </Button>
