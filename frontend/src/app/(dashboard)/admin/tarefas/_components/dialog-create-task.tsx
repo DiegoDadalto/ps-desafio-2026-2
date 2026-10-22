@@ -13,12 +13,16 @@ import { createTarefa } from '@/actions/tarefa'
 import { filterFormData } from '@/services/filter-form-data'
 import { useEffect, useState } from 'react'
 import { useToast } from '@/components/use-toast'
+import { projetoType } from '@/types/projeto'
+import { membroType } from '@/types/member'
 
 interface DialogCreateTarefaProps {
   children: React.ReactNode
+  projetos?: projetoType[]
+  membros?: membroType[]
 }
 
-export function DialogCreateTarefa({ children }: DialogCreateTarefaProps) {
+export function DialogCreateTarefa({ children, projetos, membros }: DialogCreateTarefaProps) {
   const [open, setOpen] = useState<boolean>()
   const { toast } = useToast()
 
@@ -41,12 +45,12 @@ export function DialogCreateTarefa({ children }: DialogCreateTarefaProps) {
         <DialogHeader>
           <DialogTitle>Adicionar tarefa</DialogTitle>
           <DialogDescription>
-            Preencha as informações da nova projeta abaixo e clique em
+            Preencha as informações da nova tarefa abaixo e clique em
             &rdquo;Salvar&rdquo; para incluí-la no sistema.
           </DialogDescription>
         </DialogHeader>
         <form action={submit}>
-          <FormFieldsTarefa />
+          <FormFieldsTarefa projetos={projetos} membros={membros} />
         </form>
       </DialogContent>
     </Dialog>
