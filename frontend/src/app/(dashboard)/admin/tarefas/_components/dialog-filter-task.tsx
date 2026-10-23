@@ -46,6 +46,8 @@ export function DialogFilterTarefa({ children, projetos, membros, tarefa, readOn
     setFiltroMembro('')
   }
 
+  const aplicarFiltros = () => { setOpen(false) }
+
   const submit = async (form: FormData) => {
     const newForm = await filterFormData(form)
     const { error } = await JSON.parse(await createTarefa(newForm))
@@ -104,10 +106,10 @@ export function DialogFilterTarefa({ children, projetos, membros, tarefa, readOn
           </FormField>
         </FormFieldsGroup>
         <DialogFooter className={cn({ hidden: readOnly })}>
-          <Button type="submit" pending={pending}>
+          <Button type="submit" pending={pending} onClick={apagarFiltros}>
             Remover filtros
           </Button>
-          <Button type="submit" pending={pending}>
+          <Button type="submit" pending={pending} onClick={aplicarFiltros}>
             Aplicar
           </Button>
         </DialogFooter>
