@@ -57,7 +57,7 @@ export default async function ListMembers() {
                 <TableCell className="hidden md:table-cell">{member.cor_favorita || '-'}</TableCell>
                 <TableCell className="hidden md:table-cell">
                   {member.data_aniversario
-                    ? new Date(member.data_aniversario).toLocaleDateString('pt-BR')
+                    ? new Date(member.data_aniversario).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
                     : '-'}
                 </TableCell>
                 <TableCell className="flex justify-end gap-2">

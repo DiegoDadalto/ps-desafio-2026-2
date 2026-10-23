@@ -94,7 +94,7 @@ export default async function ListTasks() {
             ))}
           </TableBody>
           {!response.length && (
-            <TableCaption>Nenhum projeto encontrado.</TableCaption>
+            <TableCaption>Nenhuma tarefa encontrada.</TableCaption>
           )}
         </Table>
       </DashboardContainer>

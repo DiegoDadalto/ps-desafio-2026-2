@@ -55,10 +55,10 @@ export default async function ListProjects() {
                 <TableCell>{projeto.nome}</TableCell>
                 <TableCell>{projeto.nome_cliente}</TableCell>
                 <TableCell className="hidden md:table-cell">
-                  {new Date(projeto.data_inicio).toLocaleDateString('pt-BR')}
+                  {new Date(projeto.data_inicio).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                  {new Date(projeto.data_fim).toLocaleDateString('pt-BR')}
+                  {new Date(projeto.data_fim).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
                 </TableCell>
                 <TableCell className="flex justify-end gap-2">
                   <DialogInformationProjeto projeto={projeto}>
