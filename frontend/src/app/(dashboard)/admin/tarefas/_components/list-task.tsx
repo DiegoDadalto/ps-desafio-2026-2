@@ -19,6 +19,8 @@ import { DialogCreateTarefa } from './dialog-create-task'
 import { DialogFilterTarefa } from './dialog-filter-task'
 import { projetoType } from '@/types/projeto'
 import { membroType } from '@/types/member'
+import { useState } from 'react'
+import ListFilteredTasks from './list-filtered-tasks'
 
 export default async function ListTasks() {
   const { response } = await api<tarefaType[]>('GET', '/tarefas')
@@ -34,70 +36,6 @@ export default async function ListTasks() {
   }
 
   return (
-    <>
-      <DashboardContainer className="flex h-min space-x-0 gap-x-1 gap-y-2.5 max-sm:flex-col">
-        <DialogCreateTarefa projetos={projetos} membros={membros}>
-          <Button size="sm">
-            <LuPlus />
-            Nova tarefa
-          </Button>
-        </DialogCreateTarefa>
-        <DialogFilterTarefa>
-          <Button size="sm">
-              <LuFilter />
-              Filtrar tarefas
-          </Button>
-        </DialogFilterTarefa>
-      </DashboardContainer>
-      <DashboardContainer>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Título</TableHead>
-              <TableHead>Projeto</TableHead>
-              <TableHead>Membro</TableHead>
-              <TableHead className="hidden md:table-cell">Início</TableHead>
-              <TableHead className="hidden md:table-cell">Fim</TableHead>
-              <TableHead className="text-right">Ações</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {response.map((tarefa: tarefaType) => (
-              <TableRow key={tarefa.id}>
-                <TableCell>{tarefa.titulo}</TableCell>
-                <TableCell>{tarefa.projeto.nome}</TableCell>
-                <TableCell>{tarefa.membro?.nome}</TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {new Date(tarefa.data_inicio).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {new Date(tarefa.data_fim).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
-                </TableCell>
-                <TableCell className="block sm:flex justify-end gap-2">
-                  <DialogInformationTarefa tarefa={tarefa}>
-                    <Button variant="default-inverse" size="icon">
-                      <LuInfo />
-                    </Button>
-                  </DialogInformationTarefa>
-                  <DialogUpdateTarefa tarefa={tarefa} projetos={projetos} membros={membros}>
-                    <Button variant="secondary-inverse" size="icon">
-                      <LuPen />
-                    </Button>
-                  </DialogUpdateTarefa>
-                  <DialogTarefaDelete id={tarefa.id}>
-                    <Button variant="destructive-inverse" size="icon">
-                      <LuTrash />
-                    </Button>
-                  </DialogTarefaDelete>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          {!response.length && (
-            <TableCaption>Nenhuma tarefa encontrada.</TableCaption>
-          )}
-        </Table>
-      </DashboardContainer>
-    </>
+    <ListFilteredTasks tarefas={response} projetos={projetos} membros={membros}/>
   )
 }
