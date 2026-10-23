@@ -44,13 +44,14 @@ export default function FormFieldsTarefa({
         </FormField>
         <FormField>
           <Label htmlFor="descricao">Descrição</Label>
-          <Input
+          <textarea className="flex w-full rounded border border-input bg-background shadow px-3 py-2 text-sm resize-none disabled:opacity-50 disabled:cursor-not-allowed col-start-2 col-end-5"
             name="descricao"
             id="descricao"
             placeholder="Insira a descrição da tarefa"
             defaultValue={tarefa?.descricao}
             disabled={pending}
             readOnly={readOnly}
+            rows={6}
           />
         </FormField>
         <FormField>
@@ -60,7 +61,7 @@ export default function FormFieldsTarefa({
             id="idProjeto_vinculado"
             name="idProjeto_vinculado"
             required
-            disabled={pending}
+            disabled={pending || readOnly}
             defaultValue={tarefa?.idProjeto_vinculado || ""}>
               <option value="" disabled>Selecione um projeto</option>
               {projetos?.map((projeto) => (
@@ -75,7 +76,7 @@ export default function FormFieldsTarefa({
             id="idMembro_alocado"
             name="idMembro_alocado"
             required
-            disabled={pending}
+            disabled={pending || readOnly}
             defaultValue={tarefa?.idMembro_alocado || ""}>
               <option value="" disabled>Selecione um membro</option>
               {membros?.map((membro) => (

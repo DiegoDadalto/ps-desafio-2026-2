@@ -31,7 +31,9 @@ export function DialogCreateTarefa({ children, projetos, membros }: DialogCreate
     const { error } = await JSON.parse(await createTarefa(newForm))
 
     if (error) {
-      toast({ title: 'Não foi possível criar a tarea!' })
+      toast({ title: 'Não foi possível criar a tarefa!',
+        variant: 'destructive',
+        description: 'Erro ao processar a requisição.' })
     } else {
       toast({ title: 'Tarefa criada com sucesso!' })
       setOpen(false)

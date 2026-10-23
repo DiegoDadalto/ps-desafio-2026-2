@@ -59,8 +59,8 @@ export default function ListFilteredProjects({ projetos }: ListFilteredProjectsP
             <TableRow>
               <TableHead>Nome</TableHead>
               <TableHead>Cliente</TableHead>
-              <TableHead className="hidden md:table-cell">Início</TableHead>
-              <TableHead className="hidden md:table-cell">Fim</TableHead>
+              <TableHead className="hidden lg:table-cell">Início</TableHead>
+              <TableHead className="hidden lg:table-cell">Fim</TableHead>
               <TableHead className="text-right">Ações</TableHead>
             </TableRow>
           </TableHeader>
@@ -69,10 +69,10 @@ export default function ListFilteredProjects({ projetos }: ListFilteredProjectsP
               <TableRow key={projeto.id}>
                 <TableCell>{projeto.nome}</TableCell>
                 <TableCell>{projeto.nome_cliente}</TableCell>
-                <TableCell className="hidden md:table-cell">
+                <TableCell className="hidden lg:table-cell">
                   {new Date(projeto.data_inicio).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
                 </TableCell>
-                <TableCell className="hidden md:table-cell">
+                <TableCell className="hidden lg:table-cell">
                   {new Date(projeto.data_fim).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
                 </TableCell>
                 <TableCell className="flex justify-end gap-2">

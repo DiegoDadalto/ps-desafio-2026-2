@@ -11,16 +11,25 @@ import {
 import FormFieldsTarefa from './form-fields-task'
 import { tarefaType } from '@/types/tarefa'
 import { useState } from 'react'
+import { projetoType } from '@/types/projeto'
+import { membroType } from '@/types/member'
 
 interface DialogInformationTarefaProps {
   tarefa: tarefaType
   children: React.ReactNode
+  projetos?: projetoType[]
+  membros?: membroType[]
 }
 
 export function DialogInformationTarefa({
   tarefa,
   children,
+  projetos,
+  membros
 }: DialogInformationTarefaProps) {
+  console.log(projetos)
+  console.log(membros)
+  console.log(tarefa)
   const [open, setOpen] = useState<boolean>()
 
   return (
@@ -28,12 +37,12 @@ export function DialogInformationTarefa({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Informações do projeto</DialogTitle>
+          <DialogTitle>Informações da tarefa</DialogTitle>
           <DialogDescription>
-            Visualize as informações detalhadas do projeto abaixo.
+            Visualize as informações detalhadas da tarefa abaixo.
           </DialogDescription>
         </DialogHeader>
-        <FormFieldsTarefa tarefa={tarefa} readOnly />
+        <FormFieldsTarefa tarefa={tarefa} projetos={projetos} membros={membros} readOnly />
       </DialogContent>
     </Dialog>
   )

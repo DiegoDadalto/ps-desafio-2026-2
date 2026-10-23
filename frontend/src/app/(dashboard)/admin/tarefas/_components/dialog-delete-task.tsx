@@ -27,7 +27,7 @@ export function DialogTarefaDelete({ id, children }: DialogDeleteTarefaProps) {
     const { error } = await JSON.parse(await destroyTarefa(id))
 
     if (error) {
-      toast({ title: 'Não foi possível excluir a tarefa!' })
+      toast({ variant: 'destructive', title: 'Não foi possível excluir a tarefa!' })
     } else {
       toast({ title: 'Tarefa excluída com sucesso!' })
     }

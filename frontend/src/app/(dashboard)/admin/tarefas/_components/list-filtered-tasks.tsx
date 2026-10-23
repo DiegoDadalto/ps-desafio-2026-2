@@ -68,8 +68,8 @@ export default function ListFilteredTasks({ tarefas, membros, projetos }: ListFi
               <TableHead>Título</TableHead>
               <TableHead>Projeto</TableHead>
               <TableHead>Membro</TableHead>
-              <TableHead className="hidden md:table-cell">Início</TableHead>
-              <TableHead className="hidden md:table-cell">Fim</TableHead>
+              <TableHead className="hidden lg:table-cell">Início</TableHead>
+              <TableHead className="hidden lg:table-cell">Fim</TableHead>
               <TableHead className="text-right">Ações</TableHead>
             </TableRow>
           </TableHeader>
@@ -79,14 +79,14 @@ export default function ListFilteredTasks({ tarefas, membros, projetos }: ListFi
                 <TableCell>{tarefa.titulo}</TableCell>
                 <TableCell>{tarefa.projeto.nome}</TableCell>
                 <TableCell>{tarefa.membro?.nome}</TableCell>
-                <TableCell className="hidden md:table-cell">
+                <TableCell className="hidden lg:table-cell">
                   {new Date(tarefa.data_inicio).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
                 </TableCell>
-                <TableCell className="hidden md:table-cell">
+                <TableCell className="hidden lg:table-cell">
                   {new Date(tarefa.data_fim).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
                 </TableCell>
                 <TableCell className="block sm:flex justify-end gap-2">
-                  <DialogInformationTarefa tarefa={tarefa}>
+                  <DialogInformationTarefa tarefa={tarefa} projetos={projetos} membros={membros}>
                     <Button variant="default-inverse" size="icon">
                       <LuInfo />
                     </Button>

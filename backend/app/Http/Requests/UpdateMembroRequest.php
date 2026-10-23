@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rule;
 
 class UpdateMembroRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class UpdateMembroRequest extends FormRequest
     {
         return [
             'nome' => ['sometimes'],
-            'email' => ['sometimes', 'string', 'max:255', 'unique:membros,email'],
+            'email' => ['sometimes', 'string', 'max:255', Rule::unique('membros', 'email')->ignore($this->input('id'))],
             'senha' => ['sometimes', 'string', 'max:255',
                     Password::min(8)
                     ->letters()

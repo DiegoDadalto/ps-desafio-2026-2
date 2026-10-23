@@ -48,7 +48,7 @@ export function DialogFilterProjeto({ children, projetos, readOnly, filtroClient
     const { error } = await JSON.parse(await createTarefa(newForm))
 
     if (error) {
-      toast({ title: 'Não foi possível criar a tarea!' })
+      toast({ variant: 'destructive', title: 'Não foi possível criar a tarea!' })
     } else {
       toast({ title: 'Tarefa criada com sucesso!' })
       setOpen(false)
@@ -60,9 +60,9 @@ export function DialogFilterProjeto({ children, projetos, readOnly, filtroClient
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Filtrar tarefa</DialogTitle>
+          <DialogTitle>Filtrar projeto</DialogTitle>
           <DialogDescription>
-            Escolha o método de filtragem de tarefas e clique em &quot;Aplicar&quot; para aplicar o filtro.
+            Escolha o método de filtragem de projetos e clique em &quot;Aplicar&quot; para aplicar o filtro.
           </DialogDescription>
         </DialogHeader>
         <FormFieldsGroup>

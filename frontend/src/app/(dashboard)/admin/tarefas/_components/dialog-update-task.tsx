@@ -33,7 +33,7 @@ export function DialogUpdateTarefa({ tarefa, children, projetos, membros }: Dial
     const { error } = await JSON.parse(await updateTarefa(newForm))
 
     if (error) {
-      toast({ title: 'Não foi possível editar a tarefa!' })
+      toast({ variant: 'destructive', title: 'Não foi possível editar a tarefa!' })
     } else {
       toast({ title: 'Tarefa editada com sucesso!' })
       setOpen(false)

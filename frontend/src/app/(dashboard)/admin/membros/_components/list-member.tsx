@@ -44,8 +44,8 @@ export default async function ListMembers() {
             <TableRow>
               <TableHead>Nome</TableHead>
               <TableHead>E-mail</TableHead>
-              <TableHead className="hidden md:table-cell">Cor favorita</TableHead>
-              <TableHead className="hidden md:table-cell">Aniversário</TableHead>
+              <TableHead className="hidden lg:table-cell">Cor favorita</TableHead>
+              <TableHead className="hidden lg:table-cell">Aniversário</TableHead>
               <TableHead className="text-right">Ações</TableHead>
             </TableRow>
           </TableHeader>
@@ -54,8 +54,8 @@ export default async function ListMembers() {
               <TableRow key={member.id}>
                 <TableCell className="max-w-[140px] break-all">{member.nome}</TableCell>
                 <TableCell className="max-w-[140px] break-all">{member.email}</TableCell>
-                <TableCell className="hidden md:table-cell">{member.cor_favorita || '-'}</TableCell>
-                <TableCell className="hidden md:table-cell">
+                <TableCell className="hidden lg:table-cell">{member.cor_favorita || '-'}</TableCell>
+                <TableCell className="hidden lg:table-cell">
                   {member.data_aniversario
                     ? new Date(member.data_aniversario).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
                     : '-'}
