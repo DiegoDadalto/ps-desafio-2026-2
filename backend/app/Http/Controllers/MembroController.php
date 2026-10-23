@@ -25,7 +25,7 @@ class MembroController extends Controller
      */
     public function index(): JsonResponse
     {
-        $membros = $this->membro->all();
+        $membros = $this->membro->orderBy('nome', 'asc')->get();
         return response()->json($membros, Response::HTTP_OK);
     }
 

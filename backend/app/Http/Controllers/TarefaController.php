@@ -21,7 +21,13 @@ class TarefaController extends Controller
      */
     public function index(): JsonResponse
     {
-        $tarefas = Tarefa::with('membro')->with('projeto')->get();
+        $tarefas = Tarefa::with('membro')->with('projeto')
+                                         ->join('projetos', 'tarefas.idProjeto_vinculado', '=', 'projetos.id')
+                                         ->join('membros', 'tarefas.idMembro_alocado', '=', 'membros.id')
+                                         ->orderBy('projetos.nome', 'asc')
+                                         ->orderBy('membros.nome', 'asc')
+                                         ->orderBy('titulo', 'asc')
+                                         ->select('tarefas.*')->get();
         return response()->json($tarefas, Response::HTTP_OK);
     }
 

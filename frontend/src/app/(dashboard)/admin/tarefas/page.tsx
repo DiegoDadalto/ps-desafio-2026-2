@@ -5,7 +5,7 @@ import {
   DashboardHeaderTitle,
   DashboardMain,
 } from '@/components/dashboard/dashboard-items'
-import { LuFolderKanban } from 'react-icons/lu'
+import { LuListChecks } from 'react-icons/lu'
 import ListTasks from './_components/list-task'
 import { Suspense } from 'react'
 import { SkeletonProjects } from './_components/skeleton-projects'
@@ -15,8 +15,8 @@ export default async function Page() {
     <>
       <DashboardHeader>
         <DashboardHeaderTitle>
-          <LuFolderKanban />
-          Projetos
+          <LuListChecks />
+          Tarefas
         </DashboardHeaderTitle>
         <DashboardHeaderDescription>
           Cadastre, edite, visualize e exclua tarefas.
