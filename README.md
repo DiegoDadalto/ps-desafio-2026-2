@@ -59,7 +59,7 @@ Dentro da pasta `frontend` siga as seguintes instruções.
 ## ARQUITETURA E MODELAGEM DO PROJETO
 ### Modelagem do banco de dados
 
-**imagem**
+![Diagrama entidade-relacionamento do banco de dados](https://drive.google.com/drive/folders/1-dK3pOHl6pzugnrT11AYpaWZbhGww4SM?hl=pt-br)
 A modelagem do banco de dados foi feita a partir de um relato de usuário, adicionando à estrutura do banco previamente existente. A tabela **Tarefas** foi adicionada para armazenar atributos relacionados às tarefas individuais dos projetos do MEJ. Abaixo, estão os atributos presentes na tabela:
 
 - **id:** Identificador padrão de tabelas no Laravel;
@@ -97,12 +97,12 @@ if ($numeroProjetos >= 2) {
 ```
 
 A variável `$numeroProjetos` guarda o número de projetos ativos distintos que o membro está através da consulta do Eloquent na tabela **Tarefas** que realiza a verificação do conflito de projetos. Funciona da seguinte maneira:
-    - Seleciona todas as tarefas alocadas ao membro sendo inserido;
-    - Seleciona todos os projetos vinculados ao membro diferentes do projeto da nova tarefa;
-    - Agrupa as cláusulas numa função anônima, buscando projetos que têm uma data de início posterior à data de fim sendo inserida, e projetos que têm uma data de término anterior à data de início sendo inserida (ou seja, verifica se existe sobreposição de intervalos);
-    - Desconsidera duplicatas de projeto;
-    - Conta o número de projetos ativos com intervalos de tempo sobrepostos;
-    - Verifica se o número de projetos é maior ou igual a dois, caso seja, dispara uma mensagem de erro e um código de status 422 (HTTP_UNPROCESSABLE_ENTITY).
+    1. Seleciona todas as tarefas alocadas ao membro sendo inserido;
+    2. Seleciona todos os projetos vinculados ao membro diferentes do projeto da nova tarefa;
+    3. Agrupa as cláusulas numa função anônima, buscando projetos que têm uma data de início posterior à data de fim sendo inserida, e projetos que têm uma data de término anterior à data de início sendo inserida (ou seja, verifica se existe sobreposição de intervalos);
+    4. Desconsidera duplicatas de projeto;
+    5. Conta o número de projetos ativos com intervalos de tempo sobrepostos;
+    6. Verifica se o número de projetos é maior ou igual a dois, caso seja, dispara uma mensagem de erro e um código de status 422 (HTTP_UNPROCESSABLE_ENTITY).
 
 
 2. **A data de início de uma tarefa não pode ser anterior à data de início do projeto vinculado:**
@@ -299,3 +299,8 @@ public function run(): void
 ```
 
 O seeder utiliza da factory para gerar 10 instâncias na tabela **Tarefas**.
+
+## INTERFACE
+### Aba de membros
+
+1. 
