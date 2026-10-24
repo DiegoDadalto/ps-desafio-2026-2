@@ -129,3 +129,115 @@ O backend faz uma comparação similar à anterior, verificando se a data de fim
 
 
 ## DOCUMENTAÇÃO DA API
+Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, para facilitar a exemplificação, considere `baseUrl` como tal porta.
+
+### Rotas - Membro
+- **Obter membro:**
+    - Método: **GET**
+    - Rota: `baseUrl/membros/{id do membro}`, Ex.: id = 1000 => baseUrl/membros/1000
+    - Objeto retornado: ```json {
+        "id": "a30d9824-c168-42a7-a548-30b4696a7536",
+        "nome": "Amanda Orn",
+        "email": "predovic.cyrus@example.org",
+        "cor_favorita": "Purple",
+        "data_aniversario": "2025-03-11",
+        "image": "https://picsum.photos/seed/e5f90607-b845-3479-95dc-9a59667424ee/400/400",
+        "created_at": "2026-10-23T20:37:04.000000Z",
+        "updated_at": "2026-10-23T20:37:04.000000Z"
+    } ```
+    - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Membro não encontrado;
+
+- **Inserir membro:**
+    - Método: **ṔOST**
+    - Rota: `baseUrl/membros/`
+    - Parâmetros esperados:
+        - nome: string
+        - email: string
+        - senha: string
+        - cor_favorita: string
+        - data_aniversario: date
+        - image: image (Opcional)
+    - Código de status retornado: `201 Created`: Sucesso; `422 Unprocessable Entity`: Erro na inserção de atributos obrigatórios
+
+- **Atualizar membro:**
+    - Método: **PUT**
+    - Rota: `baseUrl/membros/{id do membro}`, Ex.: id = 1000 => baseUrl/membros/1000
+    - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Membro não encontrado;
+
+- **Deletar membro:**
+    - Método: **DELETE**
+    - Rota: `baseUrl/membros/{id do membro}`
+    - Código de status retornado: `204 No Content`: Sucesso; `404 Not Found`: Membro não encontrado;
+
+### Rotas - Projeto
+- **Obter projeto:**
+    - Método: **GET**
+    - Rota: `baseUrl/projetos/{id do projeto}`
+    - Objeto retornado: ```json {
+        "id": "a30d9825-5002-4753-a0a7-87ab9dd8da30",
+        "nome": "Doloribus officia facere neque.",
+        "nome_cliente": "Lavinia Stiedemann",
+        "descricao": "Fugit repellat quidem dolorem et doloribus alias iste. Adipisci labore ea voluptatibus possimus. Ut illum dolores nostrum.",
+        "data_inicio": "2027-09-13",
+        "data_fim": "2027-12-25",
+        "created_at": "2026-10-23T20:37:04.000000Z",
+        "updated_at": "2026-10-23T20:37:04.000000Z"
+    } ```
+    - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Projeto não encontrado;
+
+- **Inserir membro:**
+    - Método: **ṔOST**
+    - Rota: `baseUrl/projetos/`
+    - Parâmetros esperados:
+        - nome: string
+        - nome_cliente: string
+        - descricao: string
+        - data_inicio: date
+        - data_fim: date
+    - Código de status retornado: `201 Created`: Sucesso; `422 Unprocessable Entity`: Erro na inserção de atributos obrigatórios
+
+## Rotas - Tarefa
+- **Obter tarefa:**
+    - Método: **GET**
+    - Rota: `baseUrl/tarefas/{id da tarefa}`
+    - Objeto retornado: ```json {
+        "id": "a30d9825-afb9-49db-bce4-f06459fb8557",
+        "idMembro_alocado": "a30d9825-2840-4071-9d1d-ed1141307673",
+        "idProjeto_vinculado": "a30d9825-8b4d-4d85-ad1d-3ceddc4eb2de",
+        "titulo": "Occaecati a aspernatur quas aut.",
+        "descricao": "Natus saepe reprehenderit pariatur praesentium. Est mollitia hic et esse. Ut nesciunt sed recusandae quo autem libero.",
+        "data_inicio": "2027-01-23",
+        "data_fim": "2027-04-22",
+        "created_at": "2026-10-23T20:37:05.000000Z",
+        "updated_at": "2026-10-23T20:37:05.000000Z",
+        "membro": {
+            "id": "a30d9825-2840-4071-9d1d-ed1141307673",
+            "nome": "Prof. Sim Abernathy III",
+            "email": "aleen.boyle@example.org",
+            "cor_favorita": "Purple",
+            "data_aniversario": "2026-05-16",
+            "image": "https://picsum.photos/seed/c7dc92e4-9ab0-3dbc-b020-a4209ed1228d/400/400",
+            "created_at": "2026-10-23T20:37:04.000000Z",
+            "updated_at": "2026-10-23T20:37:04.000000Z"
+        },
+        "projeto": {
+            "id": "a30d9825-8b4d-4d85-ad1d-3ceddc4eb2de",
+            "nome": "Non rerum dicta illum ipsum.",
+            "nome_cliente": "Adonis Lebsack",
+            "descricao": "Autem amet doloribus quibusdam. Odio enim sint et et qui. Expedita quas at id est culpa.",
+            "data_inicio": "2026-04-21",
+            "data_fim": "2026-06-24",
+            "created_at": "2026-10-23T20:37:04.000000Z",
+            "updated_at": "2026-10-23T20:37:04.000000Z"
+        }
+    } ```
+    - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Projeto não encontrado;
+
+- **Inserir tarefa:**
+    - Método: **ṔOST**
+    - Rota: `baseUrl/tarefas/`
+    - Parâmetros esperados:
+        - idMembro_alocado: string
+        - idProjeto_vinculado: string
+        - titulo: string
+    - Código de status retornado: `201 Created`: Sucesso; `422 Unprocessable Entity`: Erro na inserção de atributos obrigatórios
