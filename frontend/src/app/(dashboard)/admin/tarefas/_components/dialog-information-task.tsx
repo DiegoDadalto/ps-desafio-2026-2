@@ -27,9 +27,7 @@ export function DialogInformationTarefa({
   projetos,
   membros
 }: DialogInformationTarefaProps) {
-  console.log(projetos)
-  console.log(membros)
-  console.log(tarefa)
+  
   const [open, setOpen] = useState<boolean>()
 
   return (

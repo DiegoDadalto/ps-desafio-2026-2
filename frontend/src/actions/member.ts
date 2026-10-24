@@ -17,7 +17,6 @@ export async function updateMember(form: FormData) {
   if (form.get('senha') === '') {
     form.delete('senha')
   }
-  console.log(form)
 
   const res = await api('PUT', `/membros/${form.get('id')}`, {
     data: form,

@@ -1,8 +1,9 @@
 # Sistema de Gestão de Projetos MEJ
-## Iniciando projeto
+## INICIANDO O PROJETO
+
 Clone o projeto para sua máquina:
 ```bash
-    git clone link-do-projeto
+    git clone https://github.com/DiegoDadalto/ps-desafio-2026-2
 ```
 ### Laravel
 Dentro da pasta `backend` siga as seguintes instruções.
@@ -14,7 +15,7 @@ Dentro da pasta `backend` siga as seguintes instruções.
     ```bash
     cp .env.example .env
     ```
-3. Após isso insira as credenciais do banco de dados no arquivo `.env`
+3. Após isso insira as credenciais do banco de dados no arquivo `.env`, como nome de usuário e senha;
 4. Crie o schema no banco de dados. O nome do banco deve ser o valor contido na variável `DB_DATABASE` presente no arquivo `.env`. 
 5. Gere a chave do projeto:
     ```bash
@@ -192,7 +193,7 @@ Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, pa
     ```
     - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Projeto não encontrado;
 
-- **Inserir membro:**
+- **Inserir projeto:**
     - Método: **POST**
     - Rota: `baseUrl/projetos/`
     - Parâmetros esperados:
@@ -202,6 +203,17 @@ Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, pa
         - data_inicio: date
         - data_fim: date
     - Código de status retornado: `201 Created`: Sucesso; `422 Unprocessable Entity`: Erro na inserção de atributos obrigatórios
+
+- **Atualizar projeto:**
+    - Método: **PUT**
+    - Rota: `baseUrl/projeto/{id do projeto}`
+    - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Projeto não encontrado;
+
+- **Deletar projeto:**
+    - Método: **DELETE**
+    - Rota: `baseUrl/membros/{id do projeto}`
+    - Código de status retornado: `204 No Content`: Sucesso; `404 Not Found`: Projeto não encontrado;
+    - Obs.: Ao deletar um projeto, **todas** as tarefas relacionadas a ele também são deletadas.
 
 ### Rotas - Tarefa
 - **Obter tarefa:**
@@ -254,6 +266,16 @@ Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, pa
         - data_inicio: date
         - data_fim: date
     - Código de status retornado: `201 Created`: Sucesso; `422 Unprocessable Entity`: Erro na inserção de atributos obrigatórios
+
+- **Atualizar tarefa:**
+    - Método: **PUT**
+    - Rota: `baseUrl/membros/{id da tarefa}`
+    - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Tarefa não encontrada;
+
+- **Deletar tarefa:**
+    - Método: **DELETE**
+    - Rota: `baseUrl/membros/{id do tarefa}`
+    - Código de status retornado: `204 No Content`: Sucesso; `404 Not Found`: Tarefa não encontrada;
 
 ### Factory e Seeder de tarefas
 Foram criadas uma factory e um seeder para a tabela de tarefas para gerar dados falsos no banco de dados. A seguir há o trecho do código e uma breve explicação dos dados gerados.
@@ -372,3 +394,106 @@ Filtro por membro:
 Filtro por projeto e membro:
 
 ![Filtro de projeto e membro](https://lh3.googleusercontent.com/d/12vUMPPnpmx1klDCKyF60yWFbC1fY7zFG)
+
+## EXTRA: Sistema de filtragem
+
+O sistema de filtragem de projetos e tarefas se divide em três componentes de cada aba: o componente de servidor da listagem de projetos/tarefas (**ListTasks/ListProjects**); o componente para exibir as tarefas filtradas (**ListFilteredTasks/ListFilteredProjects**) e o componente da caixa de diálogo da filtragem (**DialogFilterTarefa/DialogFilterProjeto**). Vamos usar a listagem filtrada de tarefas como exemplo:
+
+**ListTasks (list-task.tsx)**
+```typescript
+export default async function ListTasks() {
+  const { response } = await api<tarefaType[]>('GET', '/tarefas')
+  const { response: projetos } = await api<projetoType[]>('GET', '/projetos')
+  const { response: membros } = await api<membroType[]>('GET', '/membros')
+  
+  if (!response) {
+    return (
+      <DashboardContainer className="text-destructive">
+        Não foi possível obter as tarefas.
+      </DashboardContainer>
+    )
+  }
+
+  return (
+    <ListFilteredTasks tarefas={response} projetos={projetos} membros={membros}/>
+  )
+}
+```
+
+A listagem é desestruturada em dois componentes para separar ações de servidor e de cliente. O componente **ListTasks** faz a requisição à API para obter os dados de tarefas, projetos e membros e passa esses dados como _props_ ao componente **ListFilteredTasks**, que irá manipular os dados para realizar a filtragem.
+
+**ListFilteredTasks (list-filtered-tasks.tsx)**
+```typescript
+const [filtroProjeto, setFiltroProjeto] = useState('')
+const [filtroMembro, setFiltroMembro] = useState('')
+
+const tarefasFiltradas = tarefas?.filter((tarefa) => {
+    const fProjeto = !filtroProjeto || tarefa.idProjeto_vinculado === filtroProjeto
+    const fMembro = !filtroMembro || tarefa.idMembro_alocado === filtroMembro
+    return fProjeto && fMembro
+})
+```
+
+Para filtrar as tarefas de acordo com o atributo, usa-se dois _hooks_ useState(), que inicializam com uma string vazia, indicando a ausência de filtro. Para de fato filtrar as tarefas, usa-se o método **filter()**, que criará um novo array com as tarefas filtradas a partir da função anônima (através de comparações, onde apenas as que resultarem em **true** passarão para o novo array).
+Com isso, temos duas validações antes do retorno que funcionam de maneira idêntica: caso nenhum filtro esteja selecionado, fProjeto ou fMembro assumem `!filtroProjeto === true` / `!filtroMembro === true`, efetivamente ignorando a validação e passando todos os elementos de `tarefa` para o novo array; caso algum filtro esteja selecionado, fProjeto e fMembro assumem o valor da verificação `tarefa.idProjeto_vinculado === filtroProjeto` / `tarefa.idMembro_alocado === filtroMembro`, ou seja, se o membro ou o projeto presente no array original for igual ao membro ou projeto selecionado na filtragem, ele passa para o próximo array, sendo exibido na interface, com fProjeto e/ou fMembro assumindo `true`, caso contrário, ele não é exibido na interface, com fProjeto e/ou fMembro assumindo `false`.
+Finalmente, a função retorna o resultado da verificação lógica `fProjeto && fMembro`, ou seja, é mostrado na interface apenas o elemento que contém os atributos exigidos pelo filtro selecionado.
+
+```js
+<DialogFilterTarefa
+    projetos={projetos}
+    membros={membros}
+    filtroProjeto={filtroProjeto}
+    setFiltroProjeto={setFiltroProjeto}
+    filtroMembro={filtroMembro}
+    setFiltroMembro={setFiltroMembro}>
+    <Button size="sm">
+        <LuFilter />
+        Filtrar tarefas
+    </Button>
+</DialogFilterTarefa>
+```
+
+Os _props_ do componente pai, bem como as variáveis e funções dos **useState()** são passados como _props_ para o componente DialogFilterTarefa.
+
+**DialogFilterTarefa (dialog-filter-task.tsx)**
+```typescript
+const apagarFiltros = () => {
+    setFiltroProjeto('')
+    setFiltroMembro('')
+}
+
+const aplicarFiltros = () => { setOpen(false) }
+```
+
+São criadas funções simples para limpar os filtros dentro da caixa de diálogo, e fechar a caixa de diálogo após aplicar os filtros.
+
+```js
+<FormField>
+    <Label htmlFor="projeto">Projeto</Label>
+    <select
+        className="flex h-10 w-full rounded border border-input bg-background shadow px-3 py-2 text-sm col-start-2 col-end-5"
+        id="idProjeto_vinculado"
+        value={filtroProjeto}
+        onChange={(event) => setFiltroProjeto(event.target.value)}
+        disabled={pending}
+        defaultValue={tarefa?.idProjeto_vinculado || ""}>
+        <option value="">Selecione um projeto</option>
+        {projetos?.map((projeto) => (
+            <option key={projeto.id} value={projeto.id}>{projeto.nome}</option>
+        ))}
+    </select>
+</FormField>
+```
+
+O menu de seleção dentro da caixa de diálogo de filtros assume alguns valores tratados nos componentes pais: o `value` indica o filtro atualmente selecionado, exibido na caixa de seleção; `onChange` possui uma _arrow function_ que atualiza o valor de filtroProjeto para o filtro atualmente selecionado.
+
+O sistema de filtragem de projetos possui o mesmo funcionamento, apesar de um pouco mais simples, por se tratar de apenas um filtro.
+
+## USO DE IA
+Para auxiliar no desenvolvimento do projeto, o chatbot **Gemini** foi utilizado para fins de aprendizado e retirada de dúvidas simples, mais especificamente em:
+
+- Sintaxe do TailwindCSS, php e Laravel;
+- Comandos de terminal;
+- Auxílio na implementação de algumas regras de negócio;
+- AUxílio na implementação do menu seletor;
+- Auxílio da implementação da filtragem;
