@@ -99,12 +99,12 @@ if ($numeroProjetos >= 2) {
 ```
 
 A variável `$numeroProjetos` guarda o número de projetos ativos distintos que o membro está através da consulta do Eloquent na tabela **Tarefas** que realiza a verificação do conflito de projetos. Funciona da seguinte maneira:
-    1. Seleciona todas as tarefas alocadas ao membro sendo inserido;
-    2. Seleciona todos os projetos vinculados ao membro diferentes do projeto da nova tarefa;
-    3. Agrupa as cláusulas numa função anônima, buscando projetos que têm uma data de início posterior à data de fim sendo inserida, e projetos que têm uma data de término anterior à data de início sendo inserida (ou seja, verifica se existe sobreposição de intervalos);
-    4. Desconsidera duplicatas de projeto;
-    5. Conta o número de projetos ativos com intervalos de tempo sobrepostos;
-    6. Verifica se o número de projetos é maior ou igual a dois, caso seja, dispara uma mensagem de erro e um código de status 422 (HTTP_UNPROCESSABLE_ENTITY).
+    * Seleciona todas as tarefas alocadas ao membro sendo inserido;
+    * Seleciona todos os projetos vinculados ao membro diferentes do projeto da nova tarefa;
+    * Agrupa as cláusulas numa função anônima, buscando projetos que têm uma data de início posterior à data de fim sendo inserida, e projetos que têm uma data de término anterior à data de início sendo inserida (ou seja, verifica se existe sobreposição de intervalos);
+    * Desconsidera duplicatas de projeto;
+    * Conta o número de projetos ativos com intervalos de tempo sobrepostos;
+    * Verifica se o número de projetos é maior ou igual a dois, caso seja, dispara uma mensagem de erro e um código de status 422 (HTTP_UNPROCESSABLE_ENTITY).
 
 
 2. **A data de início de uma tarefa não pode ser anterior à data de início do projeto vinculado:**
