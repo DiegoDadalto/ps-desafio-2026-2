@@ -59,7 +59,7 @@ Dentro da pasta `frontend` siga as seguintes instruções.
 ## ARQUITETURA E MODELAGEM DO PROJETO
 ### Modelagem do banco de dados
 
-![Diagrama entidade-relacionamento do banco de dados](https://drive.google.com/drive/folders/1-dK3pOHl6pzugnrT11AYpaWZbhGww4SM?hl=pt-br)
+![Diagrama entidade-relacionamento do banco de dados](https://lh3.googleusercontent.com/d/10TduZv-tAwDHyEEvlDFnmeJlg3UKJqZ-)
 A modelagem do banco de dados foi feita a partir de um relato de usuário, adicionando à estrutura do banco previamente existente. A tabela **Tarefas** foi adicionada para armazenar atributos relacionados às tarefas individuais dos projetos do MEJ. Abaixo, estão os atributos presentes na tabela:
 
 - **id:** Identificador padrão de tabelas no Laravel;
