@@ -135,7 +135,9 @@ Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, pa
 - **Obter membro:**
     - Método: **GET**
     - Rota: `baseUrl/membros/{id do membro}`, Ex.: id = 1000 => baseUrl/membros/1000
-    - Objeto retornado: ```json {
+    - Objeto retornado:
+    ```json
+    {
         "id": "a30d9824-c168-42a7-a548-30b4696a7536",
         "nome": "Amanda Orn",
         "email": "predovic.cyrus@example.org",
@@ -144,11 +146,12 @@ Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, pa
         "image": "https://picsum.photos/seed/e5f90607-b845-3479-95dc-9a59667424ee/400/400",
         "created_at": "2026-10-23T20:37:04.000000Z",
         "updated_at": "2026-10-23T20:37:04.000000Z"
-    } ```
+    }
+    ```
     - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Membro não encontrado;
 
 - **Inserir membro:**
-    - Método: **ṔOST**
+    - Método: **POST**
     - Rota: `baseUrl/membros/`
     - Parâmetros esperados:
         - nome: string
@@ -173,7 +176,9 @@ Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, pa
 - **Obter projeto:**
     - Método: **GET**
     - Rota: `baseUrl/projetos/{id do projeto}`
-    - Objeto retornado: ```json {
+    - Objeto retornado:
+    ```json
+    {
         "id": "a30d9825-5002-4753-a0a7-87ab9dd8da30",
         "nome": "Doloribus officia facere neque.",
         "nome_cliente": "Lavinia Stiedemann",
@@ -182,11 +187,12 @@ Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, pa
         "data_fim": "2027-12-25",
         "created_at": "2026-10-23T20:37:04.000000Z",
         "updated_at": "2026-10-23T20:37:04.000000Z"
-    } ```
+    }
+    ```
     - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Projeto não encontrado;
 
 - **Inserir membro:**
-    - Método: **ṔOST**
+    - Método: **POST**
     - Rota: `baseUrl/projetos/`
     - Parâmetros esperados:
         - nome: string
@@ -196,11 +202,13 @@ Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, pa
         - data_fim: date
     - Código de status retornado: `201 Created`: Sucesso; `422 Unprocessable Entity`: Erro na inserção de atributos obrigatórios
 
-## Rotas - Tarefa
+### Rotas - Tarefa
 - **Obter tarefa:**
     - Método: **GET**
     - Rota: `baseUrl/tarefas/{id da tarefa}`
-    - Objeto retornado: ```json {
+    - Objeto retornado:
+    ```json 
+    {
         "id": "a30d9825-afb9-49db-bce4-f06459fb8557",
         "idMembro_alocado": "a30d9825-2840-4071-9d1d-ed1141307673",
         "idProjeto_vinculado": "a30d9825-8b4d-4d85-ad1d-3ceddc4eb2de",
@@ -230,14 +238,64 @@ Por padrão, o servidor do backend inicia na porte **http://127.0.0.1:8000**, pa
             "created_at": "2026-10-23T20:37:04.000000Z",
             "updated_at": "2026-10-23T20:37:04.000000Z"
         }
-    } ```
+    }
+    ```
     - Código de status retornado: `200 OK`: Sucesso; `404 Not Found`: Projeto não encontrado;
 
 - **Inserir tarefa:**
-    - Método: **ṔOST**
+    - Método: **POST**
     - Rota: `baseUrl/tarefas/`
     - Parâmetros esperados:
         - idMembro_alocado: string
         - idProjeto_vinculado: string
         - titulo: string
+        - descricao: string
+        - data_inicio: date
+        - data_fim: date
     - Código de status retornado: `201 Created`: Sucesso; `422 Unprocessable Entity`: Erro na inserção de atributos obrigatórios
+
+### Factory e Seeder de tarefas
+Foram criadas uma factory e um seeder para a tabela de tarefas para gerar dados falsos no banco de dados. A seguir há o trecho do código e uma breve explicação dos dados gerados.
+
+**Factory**
+```php
+public function definition(): array
+    {
+        $dataInicio = fake()->dateTimeBetween('2025-01-01', '2027-12-30');
+        $dataFim = fake()->dateTimeBetween(
+            $dataInicio->modify('+1 day'),
+            '2027-12-31'
+        );
+
+        return [
+            'idMembro_alocado' => Membro::inRandomOrder()->first()?->id ?? Membro::factory(),
+            'idProjeto_vinculado' => Projeto::factory(),
+            'titulo' => $this->faker->sentence(4),
+            'descricao' => $this->faker->paragraph(),
+            'data_inicio' => $dataInicio->format('Y-m-d'),
+            'data_fim' => $dataFim->format('Y-m-d'),
+        ];
+    }
+```
+
+**Dados gerados para cada atributo:**
+- **idMembro_alocado:** Associa um id de um membro já existente na tabela **Membros** à tarefa; se não houver membros disponíveis, cria um novo membro com a factory de membro;
+    - Exemplo de dado gerado: **a30d9825-2840-4071-9d1d-ed1141307673**
+- **idProjeto_vinculado:** Associa um id de um projeto na tabela **Projetos** à tarefa;
+    - Exemplo de dado gerado: **a30d9825-8b4d-4d85-ad1d-3ceddc4eb2de**
+- **titulo:** Gera uma frase com quatro palavras.
+    - Exemplo de dado gerado: **Occaecati a aspernatur quas aut.**
+- **descricao:** Gera um parágrafo aleatório.
+    - Exemplo de dado gerado: **Natus saepe reprehenderit pariatur praesentium. Est mollitia hic et esse. Ut nesciunt sed recusandae quo autem libero.**
+- **data_inicio:** Gera uma data entre 1º de janeiro de 2025 e 30 de dezembro de 2027. Obs.: A data gerada é guardada em uma variável `$dataInicio` para garantir que a data de término da tarefa não possa ser anterior à data de início.
+- **data_fim:** Gera uma data entre o dia posterir à data de início gerada e 31 de dezembro de 2027. Ex.: se a data de início gerada for 24/10/2026, o intervalo de datas de término que podem ser geradas é 25/10/2026-31/12/2027.
+
+**Seeder**
+```php
+public function run(): void
+    {
+        \App\Models\Tarefa::factory(10)->create();
+    }
+```
+
+O seeder utiliza da factory para gerar 10 instâncias na tabela **Tarefas**.
