@@ -99,6 +99,7 @@ if ($numeroProjetos >= 2) {
 ```
 
 A variável `$numeroProjetos` guarda o número de projetos ativos distintos que o membro está através da consulta do Eloquent na tabela **Tarefas** que realiza a verificação do conflito de projetos. Funciona da seguinte maneira:
+
     * Seleciona todas as tarefas alocadas ao membro sendo inserido;
     * Seleciona todos os projetos vinculados ao membro diferentes do projeto da nova tarefa;
     * Agrupa as cláusulas numa função anônima, buscando projetos que têm uma data de início posterior à data de fim sendo inserida, e projetos que têm uma data de término anterior à data de início sendo inserida (ou seja, verifica se existe sobreposição de intervalos);
