@@ -60,6 +60,7 @@ Dentro da pasta `frontend` siga as seguintes instruções.
 ### Modelagem do banco de dados
 
 ![Diagrama entidade-relacionamento do banco de dados](https://lh3.googleusercontent.com/d/10TduZv-tAwDHyEEvlDFnmeJlg3UKJqZ-)
+
 A modelagem do banco de dados foi feita a partir de um relato de usuário, adicionando à estrutura do banco previamente existente. A tabela **Tarefas** foi adicionada para armazenar atributos relacionados às tarefas individuais dos projetos do MEJ. Abaixo, estão os atributos presentes na tabela:
 
 - **id:** Identificador padrão de tabelas no Laravel;
@@ -303,4 +304,71 @@ O seeder utiliza da factory para gerar 10 instâncias na tabela **Tarefas**.
 ## INTERFACE
 ### Aba de membros
 
-1. 
+**Campo vazio na criação de membro**
+
+![Campo vazio na criação de membro](https://lh3.googleusercontent.com/d/13InBdmh5JhBPMJrZJ5nPZuaesU_jikSo)
+
+Ao tentar criar um membro sem um campo obrigatório, uma mensagem de erro aparecerá.
+
+**Restrição de integridade de um campo**
+
+![Restrição de integridade de um campo](https://lh3.googleusercontent.com/d/1eNCS1JqESwq19eQU8dgNk8OWVcR3h_e8)
+
+No exemplo acima, alguma das restrições da senha foi quebrada (Letras minúsculas e maiúsculas, números, símbolos).
+
+**Sucesso na criação de um membro**
+
+![Sucesso na criação de um membro](https://lh3.googleusercontent.com/d/1x65FdjL06rACVrpsqN4OAd6KOZOT4YcV)
+
+**Restrição de unicidade do e-mail**
+
+![Restrição de unicidade do e-mail](https://lh3.googleusercontent.com/d/1K3R4o1HsAJb9x4ObadJKrGgc_2dIaL_v)
+
+No exemplo acima, tentou-se criar um membro com um endereço de e-mail já existente (diego@gmail.com), resultando num erro ao submeter.
+
+**Sucesso na edição de um membro**
+
+![Sucesso na edição de um membro](https://lh3.googleusercontent.com/d/1GQLRQUQ2zXbCq1tgRcUyFSV1r0wTBLYH)
+
+**Exigência de data de fim posterior à data de início**
+
+![Exigência de data de fim posterior à data de início](https://lh3.googleusercontent.com/d/1ncN-Op6TFTKlfHrap75xk8yXm_fXBiuX)
+
+Ao tentar criar uma tarefa cuja data de fim é anterior à data de início, como no exemplo, onde a data de início é 24/10 e a de fim é 20/10, o sistema bloqueia a criação do projeto.
+
+**Filtragem de projetos**
+
+![Janela de filtragem de projetos](https://lh3.googleusercontent.com/d/1kQCdeWxvCicgPI6fcI5WJ3u7LyM_l9sh)
+![Projetos filtrados](https://lh3.googleusercontent.com/d/1_Qrfc62AnLtzlg1lJKaaMLOHl8VT8tFD)
+
+**Restrição de intervalo de tempo de uma tarefa**
+
+![Restrição de intervalo de tempo de uma tarefa](https://lh3.googleusercontent.com/d/1ersHqalqZP1P7vXPVRF8OgsfVw84TpXX)
+
+O sistema não permite que uma tarefa seja criada com um intervalo de tempo que vai além do intervalo de seu projeto vinculado.
+
+![Tarefa criada com sucesso](https://lh3.googleusercontent.com/d/1xmumFbZeDqcUH51QySzT98T0lqy3T9tC)
+
+**Trava de sobrecarga de trabalho de um membro**
+
+![Trava de sobrecarga de trabalho de um membro](https://lh3.googleusercontent.com/d/1Jq7qT_moLBqb9wD3-0xHWEZlSAg_1ZnA)
+
+No exemplo em questão, tenta-se criar uma tarefa em um intervalo de tempo onde o membro associado estava com outras duas tarefas ativas em dois projetos diferentes; o sistema bloqueia a criação da tarefa para evitar sobrecarga de trabalho em um único membro
+
+![Tarefas sem sobreposição de intervalos](https://lh3.googleusercontent.com/d/1UlNw_94mc6SlIrv_UXhLH3NUKSegSPyU)
+
+Desse modo, o sistema permite a criação de três tarefas em três projetos diferentes, já que as tarefas em momento algum estão todas ativas ao mesmo tempo.
+
+**Filtros de tarefa**
+
+Filtro por projeto:
+
+![Filtro de projeto](https://lh3.googleusercontent.com/d/1UENkiR9FVwr32deuwA4eY7_gTXhyzmzB)
+
+Filtro por membro:
+
+![Filtro de membro](https://lh3.googleusercontent.com/d/1eEcObgg5gP3XUvBKV8_TPwwwclqAnVpO)
+
+Filtro por projeto e membro:
+
+![Filtro de projeto e membro](https://lh3.googleusercontent.com/d/12vUMPPnpmx1klDCKyF60yWFbC1fY7zFG)
