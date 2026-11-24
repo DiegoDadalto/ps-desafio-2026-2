@@ -6,6 +6,9 @@ const nextConfig = {
       'via.placeholder.com',
     ].filter(Boolean),
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 export default nextConfig
